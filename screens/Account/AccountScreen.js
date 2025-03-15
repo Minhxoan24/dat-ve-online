@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserContext } from '../../context/UserContext';
 
 const AccountScreen = ({ route, navigation }) => {
+
     const { user } = route.params;
+
+
 
     const handleLogout = async () => {
         await AsyncStorage.removeItem("user"); // Xoá thông tin tài khoản
@@ -35,7 +39,7 @@ const AccountScreen = ({ route, navigation }) => {
                     <Icon name="chevron-right" size={18} color="gray" />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('ChangePassword')}>
+                <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('ChangePassword', { user: user })}>
                     <Icon name="lock" size={30} color="green" />
                     <Text style={styles.listText}>Thay đổi mật khẩu</Text>
                     <Icon name="chevron-right" size={18} color="gray" />

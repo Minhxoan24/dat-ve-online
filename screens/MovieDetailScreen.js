@@ -41,7 +41,7 @@ const MovieDetail = ({ route, navigation }) => {
             navigation.navigate("SelectSeat", {
                 movie: movie,
                 selectedDay: selectedDay,
-                selectedTime: time
+                selectedTime: time,
             });
         } catch (error) {
             console.error("Lỗi khi kiểm tra đăng nhập:", error);
@@ -49,6 +49,7 @@ const MovieDetail = ({ route, navigation }) => {
     };
 
     useEffect(() => {
+        console.log((movie.date))
         generateWeek();
     }, []);
 
@@ -154,7 +155,7 @@ const MovieDetail = ({ route, navigation }) => {
                         <View style={styles.timesContainer}>
                             {selectedTimes.length > 0 ? (
                                 selectedTimes.map((time, index) => (
-                                    <TouchableOpacity key={index} style={styles.timeButton} onPress={(time) => handleSelect()}>
+                                    <TouchableOpacity key={index} style={styles.timeButton} onPress={() => handleSelect(time)}>
                                         <Text style={styles.timeText}>{time}</Text>
                                     </TouchableOpacity>
                                 ))

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 
-const TicketDetail = ({ navigation }) => {
+const TicketDetail = ({ route, navigation }) => {
     const ticketInfo = {
         movie: "Linh miêu",
         type: "C18 | 2D Phụ đề | 109 phút",
@@ -17,6 +17,7 @@ const TicketDetail = ({ navigation }) => {
         expiry: "16/09/2025",
         barcode: "7589023168141122",
     };
+    const { ticket } = route.params;
 
     return (
         <View style={styles.container}>
@@ -31,7 +32,7 @@ const TicketDetail = ({ navigation }) => {
 
             {/* Thông tin phim */}
             <View style={styles.card}>
-                <Text style={styles.movieTitle}>{ticketInfo.movie}</Text>
+                <Text style={styles.movieTitle}>{ticket.movie}</Text>
                 <Text style={styles.movieType}>{ticketInfo.type}</Text>
             </View>
 
@@ -41,13 +42,17 @@ const TicketDetail = ({ navigation }) => {
                     <Text style={styles.label}>Rạp chiếu</Text>
                     <Text style={styles.label}>Ngày chiếu</Text>
                     <Text style={styles.label}>Giờ chiếu</Text>
+                    <Text style={styles.label}>Phòng chiếu</Text>
+
                     <Text style={styles.label}>Ghế ngồi</Text>
                 </View>
                 <View style={styles.cardRight}>
                     <Text style={styles.value}>{ticketInfo.cinema}</Text>
-                    <Text style={styles.value}>{ticketInfo.date}</Text>
-                    <Text style={styles.value}>{ticketInfo.time}</Text>
-                    <Text style={styles.value}>{ticketInfo.seats.join(", ")}</Text>
+                    <Text style={styles.value}>{ticket.date}</Text>
+                    <Text style={styles.value}>{ticket.hour}</Text>
+                    <Text style={styles.value}>{ticket.room}</Text>
+
+                    <Text style={styles.value}>{ticket.seat.join(", ")}</Text>
                 </View>
 
 
@@ -62,17 +67,17 @@ const TicketDetail = ({ navigation }) => {
                 </View>
                 <View style={styles.totalMoney}>
                     <Text style={styles.label}>Tổng tiền</Text>
-                    <Text style={styles.total}>{ticketInfo.total}</Text>
-                    <Text style={styles.label}>Điểm tích lũy</Text>
-                    <Text style={styles.points}>{ticketInfo.points}</Text>
+                    <Text style={styles.total}>{ticket.price}</Text>
+                    {/* <Text style={styles.label}>Điểm tích lũy</Text>
+                    <Text style={styles.points}>{ticketInfo.points}</Text> */}
                     <Text style={styles.label}>Thời hạn điểm</Text>
-                    <Text style={styles.expiry}>{ticketInfo.expiry}</Text>
+                    <Text style={styles.expiry}>{ticket.date}</Text>
                 </View>
             </View>
 
             {/* Mã vạch */}
             <View style={styles.cardInfo}>
-                <Image source={{ uri: "https://barcode.tec-it.com/barcode.ashx?data=" + ticketInfo.barcode }} style={styles.barcode} />
+                <Image source={{ uri: "https://barcode.tec-it.com/barcode.ashx?data=" + ticket.id }} style={styles.barcode} />
 
             </View>
 

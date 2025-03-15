@@ -11,14 +11,15 @@ const CheckoutScreen = ({ route, navigation }) => {
     const handlePayment = async () => {
         setLoading(true);
         try {
+
             const data = {
                 movie: movie.title,
-                date: new Date(selectedDay).getTime() / 1000,
+                date: selectedDay,
                 price: price,
                 seat: selectedSeats,
                 hour: selectedTime,
             };
-
+            console.log(data)
             // Gửi dữ liệu đặt vé lên MockAPI
             const response = await axios.post(
                 "https://67d294a790e0670699be2f6a.mockapi.io/movie/Ticket",

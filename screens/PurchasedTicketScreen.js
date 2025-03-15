@@ -1,13 +1,34 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, ActivityIndicator } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import axios from "axios";
+
+
+const API_URL = "https://67d294a790e0670699be2f6a.mockapi.io/movie/Ticket";
 
 
 const MyTicketsScreen = ({ navigation }) => {
     const [selectedTab, setSelectedTab] = useState("upcoming"); // "upcoming" hoặc "watched"
+    const [tickets, setTickets] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+        const fetchTickets = async () => {
+            try {
+                const response = await axios.get(API_URL);
+                setTickets(response.data);
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu vé:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchTickets();
+    }, []);
 
     // Dữ liệu mẫu
-    const upcomingTickets = [
+    const upcomingTicketsfix = [
         {
             id: "1",
             title: "Linh miêu",
@@ -19,7 +40,7 @@ const MyTicketsScreen = ({ navigation }) => {
         },
     ];
 
-    const watchedTickets = [
+    const watchedTicketfix = [
         {
             id: "2",
             title: "Bộ tứ báo thù",
@@ -30,6 +51,8 @@ const MyTicketsScreen = ({ navigation }) => {
             expire: "01/08/2025",
         },
     ];
+    const upcomingTickets = tickets.filter(ticket => new Date(ticket.date) >= new Date());
+    const watchedTickets = tickets.filter(ticket => new Date(ticket.date) < new Date());
 
     return (
         <View style={styles.container}>
@@ -64,31 +87,34 @@ const MyTicketsScreen = ({ navigation }) => {
             </View>
 
             {/* Danh sách vé */}
-            <FlatList
-                data={selectedTab === "upcoming" ? upcomingTickets : watchedTickets}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.ticketCard} onPress={() => navigation.navigate("TicketDetail")}>
-                        <View style={styles.ticketLeft}>
-                            <Text style={styles.title}>{item.title}</Text>
-                            <Text style={styles.details}>{item.date}</Text>
-                            <Text style={styles.details}>{item.location}</Text>
-                        </View>
-                        <View style={styles.ticketRight}>
-                            <Text style={styles.price}>{item.price}</Text>
-                            <Text>Điểm tích lũy: </Text>
-                            <Text style={styles.points}>{item.points}</Text>
-                            <Text>hời hạn điểm: </Text>
+            {loading ? (
+                <ActivityIndicator size="large" color="#28a745" style={{ marginTop: 20 }} />
+            ) : (
+                <FlatList
+                    data={selectedTab === "upcoming" ? upcomingTickets : watchedTickets}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={styles.ticketCard} onPress={() => navigation.navigate("TicketDetail", { ticket: item })}>
+                            <View style={styles.ticketLeft}>
+                                <Text style={styles.title}>{item.movie}</Text>
+                                <Text style={styles.details}>{item.date}</Text>
+                                <Text style={styles.details}>{item.room}</Text>
+                            </View>
+                            <View style={styles.ticketRight}>
+                                <Text style={styles.price}>{item.price}</Text>
+                                {/* <Text>Điểm tích lũy: </Text>
+                                <Text style={styles.points}>{item.points}</Text> */}
+                                <Text>Thời hạn điểm: </Text>
 
-                            <Text style={styles.expire}>T{item.expire}</Text>
+                                <Text style={styles.expire}>{item.date}</Text>
 
-                        </View>
+                            </View>
 
 
-                    </TouchableOpacity>
-                )}
-                ListEmptyComponent={<Text style={styles.emptyText}>Không có vé</Text>}
-            />
+                        </TouchableOpacity>
+                    )}
+                    ListEmptyComponent={<Text style={styles.emptyText}>Không có vé</Text>}
+                />)}
         </View>
     );
 };
@@ -160,6 +186,9 @@ const styles = StyleSheet.create({
     ticketLeft: {
         marginHorizontal: 30,
         marginVertical: 20,
+        flexShrink: 1, // ✅ Ngăn chữ tràn ra ngoài
+        maxWidth: "60%", // ✅ Giới hạn chiều rộng (có thể điều chỉnh)
+
     },
     ticketRight: {
         marginHorizontal: 30,
@@ -173,6 +202,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
+        width: "100%",
         fontSize: 20,
         fontWeight: "bold",
         marginVertical: 20,

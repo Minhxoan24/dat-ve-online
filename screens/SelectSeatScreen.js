@@ -24,6 +24,7 @@ const ticketPrice = 150000; // Giá vé cố định
 
 const SelectSeat = ({ route, navigation }) => {
     const { movie, selectedDay, selectedTime } = route.params;
+    console.log(route.params)
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [occupiedSeats, setOccupiedSeats] = useState([]); // Lưu danh sách ghế đã đặt từ API
