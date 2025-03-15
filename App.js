@@ -16,36 +16,39 @@ import CheckoutScreen from './screens/CheckoutScreen';
 import AccountMemberScreen from './screens/Account/AccountMemberScreen';
 import AccountPointScreen from './screens/Account/AccountPointScreen';
 import AccountGiftScreen from './screens/Account/AccountGiftScreen';
+import { UserProvider } from './context/UserContext';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{}}>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home" screenOptions={{}}>
 
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} />
-        <Stack.Screen name="MovieDetail" component={MovieDetailScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Account" component={AccountScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="AccountInfo" component={AccountInfoScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="SelectSeat" component={SelectSeatScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="PurchasedTicket" component={PurchasedTicketScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="TicketDetail" component={TicketDetailScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="AccountMember" component={AccountMemberScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="AccountPoint" component={AccountPointScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="AccountGift" component={AccountGiftScreen} options={{ headerShown: false }} />
-
-
-
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} />
+          <Stack.Screen name="MovieDetail" component={MovieDetailScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Account" component={AccountScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AccountInfo" component={AccountInfoScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="SelectSeat" component={SelectSeatScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="PurchasedTicket" component={PurchasedTicketScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="TicketDetail" component={TicketDetailScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AccountMember" component={AccountMemberScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AccountPoint" component={AccountPointScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AccountGift" component={AccountGiftScreen} options={{ headerShown: false }} />
 
 
-      </Stack.Navigator>
-    </NavigationContainer>
+
+
+
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 };
 

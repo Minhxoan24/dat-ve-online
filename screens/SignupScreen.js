@@ -29,7 +29,7 @@ const SignupScreen = ({ navigation }) => {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [dob, setDob] = useState(new Date()); // Dữ liệu ngày sinh
+    const [dob, setDob] = useState(null); // Ban đầu không có giá trị ngày sinh
     const [gender, setGender] = useState(""); // Dữ liệu giới tính
 
 
@@ -79,9 +79,8 @@ const SignupScreen = ({ navigation }) => {
                     {/* Chọn ngày sinh */}
                     <View style={{ flexDirection: "row", alignItems: "" }}>
                         <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={[styles.input, styles.inputHalf]}>
-                            <Text style={styles.dateText}>{dob.toLocaleDateString()}</Text>
+                            <Text style={styles.dateText}>{dob ? dob.toLocaleDateString() : "Chọn ngày sinh"}</Text>
                         </TouchableOpacity>
-
                         <DateTimePickerModal
                             isVisible={isDatePickerVisible}
                             mode="date"
