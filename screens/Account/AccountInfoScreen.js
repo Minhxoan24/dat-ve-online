@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 
-const AccountInfoScreen = ({ navigation }) => {
-    const [selectedGender, setSelectedGender] = useState('Nam');
+
+
+const AccountInfoScreen = ({ route, navigation }) => {
+
+    const { user } = route.params;
+    const [selectedGender, setSelectedGender] = useState(user.gender ? 'Nam' : 'Nữ');
+
+    const [dob, setDob] = useState(new Date(user.dob * 1000)); // Convert timestamp to Date object
+    const [showPicker, setShowPicker] = useState(false);
+
+    const handleDateChange = (event, selectedDate) => {
+        if (selectedDate) {
+            setDob(selectedDate);
+        }
+        setShowPicker(false);
+    };
     return (
         <View style={styles.container}>
 
@@ -20,7 +35,7 @@ const AccountInfoScreen = ({ navigation }) => {
             {/* Tài khoản */}
 
             <Text style={styles.sectionTitle}>Tài khoản của bạn là</Text>
-            <TextInput style={styles.input} editable={false} value="tigamichu********no1" />
+            <TextInput style={styles.input} editable={false} value={user.email} />
 
 
             {/* Thông tin thêm */}
@@ -28,34 +43,50 @@ const AccountInfoScreen = ({ navigation }) => {
             <Text style={styles.sectionTitle}>Thông tin thêm</Text>
             <View style={styles.row}>
                 <Text style={styles.label}>Họ tên</Text>
-                <TextInput style={styles.value}>Nguyễn Văn A</TextInput>
+                <TextInput style={styles.value}>{user.name}</TextInput>
             </View>
             <View style={styles.row}>
                 <Text style={styles.label}>Ngày sinh</Text>
-                <TextInput style={styles.value}>8 Thg 10, 2004</TextInput>
+                <TouchableOpacity onPress={() => setShowPicker(true)}>
+                    <Text style={styles.value}>{dob.toLocaleDateString()}</Text>
+                </TouchableOpacity>
+                {showPicker && (
+                    <DateTimePicker
+                        value={dob}
+                        mode="date"
+                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                        onChange={handleDateChange}
+                    />
+                )}
             </View>
+            {/* Giới tính */}
             <View style={styles.row}>
                 <Text style={styles.label}>Giới tính</Text>
-                <TextInput style={styles.value}>Nam</TextInput>
 
+                <Picker selectedValue={selectedGender} onValueChange={(value) => setSelectedGender(value)} style={{ width: 120 }}>
+                    <Picker.Item label="Nam" value="Nam" />
+                    <Picker.Item label="Nữ" value="Nữ" />
+                </Picker>
             </View>
 
+
+            {/* Modal Picker */}
 
             {/* Liên hệ */}
 
             <Text style={styles.sectionTitle}>Liên hệ</Text>
             <View style={styles.row}>
                 <Text style={styles.label}>SDT di động</Text>
-                <TextInput style={styles.value}>038*****660</TextInput>
+                <TextInput style={styles.value}>{user.phone}</TextInput>
             </View>
-            <View style={styles.row}>
+            {/* <View style={styles.row}>
                 <Text style={styles.label}>Tỉnh/Thành</Text>
                 <TextInput style={styles.value}>Hà Nội</TextInput>
             </View>
             <View style={styles.row}>
                 <Text style={styles.label}>Quận/huyện</Text>
                 <TextInput style={styles.value}>Quận Hai Bà Trưng</TextInput>
-            </View>
+            </View> */}
 
 
             {/* Nút cập nhật và xóa */}
@@ -126,6 +157,7 @@ const styles = StyleSheet.create({
     value: {
         fontSize: 16,
         fontWeight: 'bold',
+        textAlign: 'right'
     },
     updateButton: {
         width: "80%",

@@ -50,7 +50,10 @@ const SignupScreen = ({ navigation }) => {
                 name,
                 phone,
                 email,
-                password
+                password,
+                dob: dob ? Math.floor(dob.getTime() / 1000) : null, // Chuyển thành timestamp hoặc null
+                gender: gender === "Nam" ? true : gender === "Nữ" ? false : null // true: Nam, false: Nữ, null nếu không chọn
+
             });
 
             setLoading(false);

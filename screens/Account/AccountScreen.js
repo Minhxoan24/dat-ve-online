@@ -3,7 +3,9 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'rea
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const AccountScreen = ({ navigation }) => {
+const AccountScreen = ({ route, navigation }) => {
+    const { user } = route.params;
+
     const handleLogout = async () => {
         await AsyncStorage.removeItem("user"); // Xoá thông tin tài khoản
         navigation.replace("Home"); // Chuyển về màn hình đăng nhập
@@ -27,7 +29,7 @@ const AccountScreen = ({ navigation }) => {
                 </View>
 
                 {/* Danh sách chức năng */}
-                <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('AccountInfo')}>
+                <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('AccountInfo', { user: user })}>
                     <Icon name="id-card" size={30} color="green" />
                     <Text style={styles.listText}>Thông tin tài khoản</Text>
                     <Icon name="chevron-right" size={18} color="gray" />

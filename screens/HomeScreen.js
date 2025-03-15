@@ -24,7 +24,7 @@ const HomeScreen = ({ navigation }) => {
     const handleUserPress = () => {
         console.log(user)
         if (user) {
-            navigation.navigate("Account");
+            navigation.navigate("Account", { user: user });
         } else {
             navigation.navigate("Login");
         }
