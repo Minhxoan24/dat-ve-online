@@ -128,7 +128,7 @@ const SelectSeat = ({ route, navigation }) => {
                         <Text style={styles.legendText}>Sweet Box</Text>
                     </View>
                     <View style={styles.legendItem}>
-                        <View style={[styles.box, { borderColor: "black", borderWidth: 2 }]}>
+                        <View style={[styles.box,]}>
                             <Icon name="window-close" size={60} color="white" />
                         </View>
                         <Text style={styles.legendText}>Ghế đã đặt</Text>

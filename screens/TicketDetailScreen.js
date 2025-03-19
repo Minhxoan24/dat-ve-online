@@ -67,7 +67,7 @@ const TicketDetail = ({ route, navigation }) => {
                 </View>
                 <View style={styles.totalMoney}>
                     <Text style={styles.label}>Tổng tiền</Text>
-                    <Text style={styles.total}>{ticket.price}</Text>
+                    <Text style={styles.total}>{ticket.price}đ</Text>
                     {/* <Text style={styles.label}>Điểm tích lũy</Text>
                     <Text style={styles.points}>{ticketInfo.points}</Text> */}
                     <Text style={styles.label}>Thời hạn điểm</Text>

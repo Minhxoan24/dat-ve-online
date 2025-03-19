@@ -101,7 +101,7 @@ const MyTicketsScreen = ({ navigation }) => {
                                 <Text style={styles.details}>{item.room}</Text>
                             </View>
                             <View style={styles.ticketRight}>
-                                <Text style={styles.price}>{item.price}</Text>
+                                <Text style={styles.price}>{item.price}đ</Text>
                                 {/* <Text>Điểm tích lũy: </Text>
                                 <Text style={styles.points}>{item.points}</Text> */}
                                 <Text>Thời hạn điểm: </Text>
