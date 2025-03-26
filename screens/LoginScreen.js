@@ -12,58 +12,52 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-
-
-const API_URL = "https://67d07fbb825945773eb11f01.mockapi.io/api/signup/users";
+const API_URL = "http://10.0.2.2:8000/account/login";
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-
     const handleLogin = async () => {
         if (!email || !password) {
             Alert.alert("Lỗi", "Vui lòng nhập email và mật khẩu");
             return;
         }
-
+    
         setLoading(true);
         try {
-            // Lấy danh sách người dùng từ API
-            const response = await axios.get(API_URL);
-            const users = response.data;
-
-            // Kiểm tra xem có tài khoản nào khớp với email và password không
-            const user = users.find(
-                (u) => u.email === email && u.password === password
-            );
-
+            const response = await axios.post(API_URL, {
+                email: email,
+                mat_khau: password
+            });
+    
             setLoading(false);
-
-            if (user) {
-                await AsyncStorage.setItem("user", JSON.stringify(user));
-
+            if (response.data.message === "Đăng nhập thành công!") {
+                await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
                 Alert.alert("Thành công", "Đăng nhập thành công!");
-                navigation.navigate("Home"); // Chuyển đến trang Home
+                navigation.navigate("Home");
             } else {
-                Alert.alert("Lỗi", "Email hoặc mật khẩu không đúng!");
+                Alert.alert("Lỗi", "Đăng nhập thất bại");
             }
         } catch (error) {
             setLoading(false);
-            Alert.alert("Lỗi", "Không thể kết nối đến máy chủ");
+            if (error.response && error.response.data.detail) {
+                Alert.alert("Lỗi", error.response.data.detail);
+            } else {
+                Alert.alert("Lỗi", "Không thể kết nối đến máy chủ");
+            }
             console.error(error);
         }
     };
+    
 
     return (
         <View style={styles.container}>
-            {/* Header */}
             <TouchableOpacity style={styles.header} onPress={() => navigation.navigate("Home")}>
                 <View >
                     <Icon name="chevron-left" size={20} color="green" />
                 </View>
                 <Text style={styles.headerTitle}>ACCOUNT MEMBER</Text>
-
             </TouchableOpacity>
             <Image source={require("../assets/img/banner.png")} style={styles.banner} />
 
@@ -108,11 +102,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
         marginTop: 30,
-
     },
     header: {
         flexDirection: 'row',
-
         padding: 15,
         backgroundColor: 'white',
         elevation: 2,
@@ -121,7 +113,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 20,
         fontSize: 18,
-
     },
     banner: { width: "100%", height: 180, marginBottom: 30 },
     form: { flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 20 },

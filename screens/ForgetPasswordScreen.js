@@ -8,35 +8,54 @@ import {
     Image,
     ScrollView,
     SafeAreaView,
+    Alert,
 } from "react-native";
+import axios from "axios";
+
+const API_URL = "http://10.0.2.2:8000/account/forgotpassword";
 
 const ForgetPasswordScreen = () => {
-    const [user, setUser] = useState("");
+    const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
 
+    const handleForgotPassword = async () => {
+        if (!email) {
+            Alert.alert("Lỗi", "Vui lòng nhập email của bạn");
+            return;
+        }
 
-    const handleRegister = () => {
-        console.log({ user });
+        setLoading(true);
+        try {
+            const response = await axios.post(API_URL, { email });
+
+            setLoading(false);
+            Alert.alert("Mật khẩu của bạn", `Mật khẩu: ${response.data}`);
+        } catch (error) {
+            setLoading(false);
+            Alert.alert("Lỗi", error.response?.data?.detail || "Không thể kết nối đến máy chủ");
+        }
     };
+
     return (
         <SafeAreaView style={styles.safeContainer}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <Image source={require("../assets/img/banner.png")} style={styles.imageRegister} resizeMode="contain" />
                 <View>
-                    <Text style={styles.header}>
-                        Lấy lại mật khẩu
-                    </Text>
+                    <Text style={styles.header}>Lấy lại mật khẩu</Text>
                 </View>
                 <View style={styles.container}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Nhập email hoặc số điện thoại"
+                        placeholder="Nhập email"
                         placeholderTextColor="rgba(0, 0, 0, 0.5)"
-                        onChangeText={setUser}
+                        onChangeText={setEmail}
+                        keyboardType="email-address"
                     />
 
-
-                    <TouchableOpacity style={styles.button} onPress={handleRegister}>
-                        <Text style={styles.buttonText}>Tiếp Tục</Text>
+                    <TouchableOpacity style={styles.button} onPress={handleForgotPassword} disabled={loading}>
+                        <Text style={styles.buttonText}>
+                            {loading ? "Đang xử lý..." : "Tiếp Tục"}
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -50,20 +69,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     scrollContainer: {
-        alignItems: "center", // Căn giữa tất cả nội dung
-
+        alignItems: "center",
     },
     container: {
-        width: "85%", // Giới hạn chiều rộng
-        alignItems: "center", // Căn giữa các input trong container
+        width: "85%",
+        alignItems: "center",
     },
     header: {
         fontSize: 20,
-        fontWeight: 20
+        fontWeight: "bold",
+        marginBottom: 15,
     },
     imageRegister: {
-        // width: "100%",
-        // height: "100%",
         marginBottom: 20,
     },
     input: {
@@ -71,21 +88,7 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         marginBottom: 15,
         padding: 10,
-        width: "100%", // Giúp căn lề trái trong khối trung tâm
-    },
-    dobAndGender: {
-        flexDirection: "row",
-        justifyContent: "space-between",
         width: "100%",
-    },
-    inputHalf: {
-        width: "48%", // Giữ khoảng cách đồng đều giữa 2 ô nhập
-    },
-    note: {
-        color: "red",
-        fontStyle: "italic",
-        marginBottom: 10,
-        alignSelf: "flex-start", // Căn lề trái trong container
     },
     button: {
         backgroundColor: "#4CDE4C",
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         alignItems: "center",
         justifyContent: "center",
-        width: "80%", // Giảm độ rộng
+        width: "80%",
         marginTop: 20,
     },
     buttonText: {

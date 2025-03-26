@@ -8,61 +8,50 @@ import {
     Image,
     ScrollView,
     SafeAreaView,
-    Platform,
     Alert
 } from "react-native";
 
-
 import axios from "axios";
-
 import { Picker } from "@react-native-picker/picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
-
-
-const API_URL = "https://67d07fbb825945773eb11f01.mockapi.io/api/signup/users";
-
+const API_BASE_URL = "http://10.0.2.2:8000/account";
 
 const SignupScreen = ({ navigation }) => {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [dob, setDob] = useState(null); // Ban đầu không có giá trị ngày sinh
-    const [gender, setGender] = useState(""); // Dữ liệu giới tính
-
-
+    const [dob, setDob] = useState(null);
+    const [gender, setGender] = useState("");
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-
     const [loading, setLoading] = useState(false);
 
     const handleSignup = async () => {
         if (!email || !password || !phone || !name) {
-            Alert.alert("Lỗi", "Vui lòng nhập đầy đủ tên, email, số điện thoại và mật khẩu");
+            Alert.alert("Lỗi", "Vui lòng nhập đầy đủ thông tin");
             return;
         }
 
         setLoading(true);
         try {
-            const response = await axios.post(API_URL, {
-                name,
-                phone,
+            const response = await axios.post(`${API_BASE_URL}/register`, {
                 email,
-                password,
-                dob: dob ? Math.floor(dob.getTime() / 1000) : null, // Chuyển thành timestamp hoặc null
-                gender: gender === "Nam" ? true : gender === "Nữ" ? false : null // true: Nam, false: Nữ, null nếu không chọn
-
+                mat_khau: password,
+                sdt: phone,
+                gioi_tinh: gender === "Nam" ? true : gender === "Nữ" ? false : null,
+                ngay_sinh: dob ? dob.toISOString().split("T")[0] : null, // YYYY-MM-DD
+                dia_chi: "Chưa cập nhật", // Giá trị mặc định
+                ten: name
             });
 
             setLoading(false);
             Alert.alert("Thành công", "Đăng ký thành công!");
-            navigation.navigate("Login"); // Chuyển đến trang 
+            navigation.navigate("Login");
         } catch (error) {
             setLoading(false);
-            Alert.alert("Lỗi", "Không thể kết nối đến máy chủ");
             console.error(error);
+            Alert.alert("Lỗi", error.response?.data?.detail || "Không thể kết nối đến máy chủ");
         }
     };
 
@@ -77,7 +66,7 @@ const SignupScreen = ({ navigation }) => {
                     <TextInput style={styles.input} placeholder="Mật khẩu" secureTextEntry onChangeText={setPassword} />
 
                     {/* Chọn ngày sinh */}
-                    <View style={{ flexDirection: "row", alignItems: "" }}>
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={[styles.input, styles.inputHalf]}>
                             <Text style={styles.dateText}>{dob ? dob.toLocaleDateString() : "Chọn ngày sinh"}</Text>
                         </TouchableOpacity>
@@ -99,17 +88,15 @@ const SignupScreen = ({ navigation }) => {
                                 <Picker.Item label="Nữ" value="Nữ" />
                             </Picker>
                         </View>
-
                     </View>
-
 
                     <Text style={styles.note}>* Thông tin bắt buộc</Text>
                     <TouchableOpacity style={styles.button} onPress={handleSignup}>
-                        <Text style={styles.loginText}>{loading ? "Đang đăng ký..." : "ĐĂNG KÝ"}</Text>
+                        <Text style={styles.buttonText}>{loading ? "Đang đăng ký..." : "ĐĂNG KÝ"}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-        </SafeAreaView >
+        </SafeAreaView>
     );
 };
 

@@ -15,11 +15,10 @@ const HomeScreen = ({ navigation }) => {
     const [selectedTab, setSelectedTab] = useState("Đang Chiếu");
 
     useEffect(() => {
-        // Lấy thông tin đăng nhập từ AsyncStorage
         const fetchUser = async () => {
-            const storedUser = await AsyncStorage.getItem("user");
-            if (storedUser) {
-                setUser(JSON.parse(storedUser));
+            const userData = await AsyncStorage.getItem("user");
+            if (userData) {
+                setUser(JSON.parse(userData));
             }
         };
         fetchUser();
