@@ -98,7 +98,7 @@ const MovieDetail = ({ route, navigation }) => {
                 <View >
                     <Icon name="chevron-left" size={20} color="green" />
                 </View>
-                <Text style={styles.headerTitle}>ACCOUNT GIFT</Text>
+                <Text style={styles.headerTitle}>Movie detail</Text>
 
             </TouchableOpacity>
 

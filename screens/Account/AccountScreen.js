@@ -34,19 +34,19 @@ const AccountScreen = ({ route, navigation }) => {
 
                 {/* Danh sách chức năng */}
                 <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('AccountInfo', { user: user })}>
-                    <Icon name="id-card" size={30} color="green" />
+                    <Icon name="id-card" size={25} color="green" />
                     <Text style={styles.listText}>Thông tin tài khoản</Text>
                     <Icon name="chevron-right" size={18} color="gray" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('ChangePassword', { user: user })}>
-                    <Icon name="lock" size={30} color="green" />
+                    <Icon name="lock" size={25} color="green" />
                     <Text style={styles.listText}>Thay đổi mật khẩu</Text>
                     <Icon name="chevron-right" size={18} color="gray" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('AccountMember')}>
-                    <Icon name="wallet" size={30} color="green" />
+                    <Icon name="wallet" size={25} color="green" />
                     <Text style={styles.listText}>Thẻ thành viên</Text>
                     <Icon name="chevron-right" size={18} color="gray" />
                 </TouchableOpacity>
@@ -54,13 +54,13 @@ const AccountScreen = ({ route, navigation }) => {
                 <View style={styles.separator} />
 
                 <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('AccountPoint')}>
-                    <Icon name="coins" size={30} color="green" />
+                    <Icon name="coins" size={25} color="green" />
                     <Text style={styles.listText}>Tích điểm</Text>
                     <Icon name="chevron-right" size={18} color="gray" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.listItem} onPress={() => navigation.navigate('AccountGift')}>
-                    <Icon name="credit-card" size={30} color="green" />
+                    <Icon name="credit-card" size={25} color="green" />
                     <Text style={styles.listText}>Thẻ quà tặng</Text>
                     <Icon name="chevron-right" size={18} color="gray" />
                 </TouchableOpacity>
@@ -75,7 +75,7 @@ const AccountScreen = ({ route, navigation }) => {
                 <View style={styles.separator} />
 
                 <TouchableOpacity style={styles.logout} onPress={handleLogout}>
-                    <Icon name="sign-out-alt" size={30} color="red" />
+                    <Icon name="sign-out-alt" size={25} color="red" />
                     <Text style={styles.logoutText}>Đăng xuất </Text>
 
                 </TouchableOpacity>
