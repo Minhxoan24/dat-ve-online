@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-
         padding: 15,
         backgroundColor: 'white',
         elevation: 2,
@@ -107,56 +106,54 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 20,
         fontSize: 18,
-
+        fontFamily: "Roboto", // Added font family
     },
     card: {
         backgroundColor: "#fff",
         padding: 15,
         marginHorizontal: 10,
-
         borderBottomWidth: 2,
         borderColor: "#D9D9D9",
         justifyContent: "center",
         alignItems: "center",
-
-
         elevation: 3,
     },
     cardInfo: {
         backgroundColor: "#fff",
         padding: 15,
         marginHorizontal: 10,
-
         borderBottomWidth: 2,
         borderColor: "#D9D9D9",
         justifyContent: "center",
         alignItems: "center",
-
         flexDirection: 'row',
         justifyContent: "flex-start",
         elevation: 3,
-
     },
     cardLeft: {
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     movieTitle: {
         fontSize: 20,
         fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
     movieType: {
         color: "gray",
+        fontFamily: "Roboto", // Added font family
     },
     label: {
         fontSize: 14,
         fontWeight: "600",
         marginBottom: 5,
+        fontFamily: "Roboto", // Added font family
     },
     value: {
         fontWeight: "bold",
         fontSize: 14,
         fontWeight: "600",
         marginBottom: 5,
+        fontFamily: "Roboto", // Added font family
     },
     cardRow: {
         flexDirection: "row",
@@ -172,21 +169,19 @@ const styles = StyleSheet.create({
     },
     cardTotal: {
         backgroundColor: "#fff",
-
         marginHorizontal: 10,
-
         borderBottomWidth: 2,
         borderColor: "#D9D9D9",
         justifyContent: "center",
         alignItems: "center",
-
         flexDirection: 'row',
         justifyContent: "flex-start",
         elevation: 3,
-
     },
     totalMoney: {
-        flex: 1, alignItems: "center", justifyContent: "center",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
         borderLeftWidth: 2,
         borderColor: "#D9D9D9",
         marginLeft: 100,
@@ -196,19 +191,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         paddingHorizontal: 20,
-        marginLeft: 15
+        marginLeft: 15,
+        fontFamily: "Roboto", // Added font family
     },
     total: {
         color: "green",
         fontWeight: "bold",
         fontSize: 16,
+        fontFamily: "Roboto", // Added font family
     },
     points: {
         color: "red",
         fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
     expiry: {
         color: "red",
+        fontFamily: "Roboto", // Added font family
     },
     barcodeContainer: {
         alignItems: "center",
@@ -223,6 +222,7 @@ const styles = StyleSheet.create({
     barcodeText: {
         fontSize: 16,
         marginTop: 5,
+        fontFamily: "Roboto", // Added font family
     },
     note: {
         textAlign: "center",
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "600",
         marginTop: 30,
+        fontFamily: "Roboto", // Added font family
     },
 });
 

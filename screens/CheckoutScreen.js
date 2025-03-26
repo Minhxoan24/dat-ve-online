@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from "axios"; // ✅ Thêm axios để gọi API
+import { StatusBar } from "expo-status-bar";
 
 
 
@@ -63,12 +64,14 @@ const CheckoutScreen = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
+            <StatusBar translucent backgroundColor="white" barStyle="dark-content" />
+
             {/* Tiêu đề */}
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.header}>
                 <View onPress={() => navigation.goBack()}>
                     <Icon name="chevron-left" size={20} color="green" />
                 </View>
-                <Text style={styles.headerTitle}>Ticket Detail</Text>
+                <Text style={styles.headerTitle}>Thanh Toán Vé</Text>
 
             </TouchableOpacity>
 
@@ -154,27 +157,22 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-
         padding: 15,
         backgroundColor: 'white',
         elevation: 2,
         borderBottomWidth: 1,
-
         borderColor: "#D9D9D9",
     },
     headerTitle: {
         flex: 1,
         paddingLeft: 20,
         fontSize: 18,
-
+        fontFamily: "Roboto", // Added font family
     },
     card: {
         flexDirection: "row",
         backgroundColor: "#fff",
         padding: 10,
-
-
-
         elevation: 3,
     },
     movieImage: {
@@ -189,28 +187,28 @@ const styles = StyleSheet.create({
     movieTitle: {
         fontSize: 16,
         fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
     text: {
         fontSize: 14,
         color: "#555",
         paddingVertical: 5,
+        fontFamily: "Roboto", // Added font family
     },
     totalPrice: {
         fontSize: 14,
         fontWeight: "bold",
         color: "red",
         marginTop: 5,
+        fontFamily: "Roboto", // Added font family
     },
-
     sectionTitle: {
         fontSize: 14,
         color: 'gray',
         padding: 10,
         paddingBottom: 10,
-
-
+        fontFamily: "Roboto", // Added font family
     },
-
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -219,20 +217,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderBottomWidth: 1,
         borderBottomColor: '#D9D9D9',
-        alignItems: "center"
+        alignItems: "center",
     },
     label: {
         fontSize: 14,
         color: "#555",
+        fontFamily: "Roboto", // Added font family
     },
     value: {
         fontSize: 14,
         fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
     arrow: {
         color: "#007bff",
         fontSize: 16,
         fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
     payButton: {
         backgroundColor: "#e91e63",
@@ -246,6 +247,7 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
         fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
 });
 

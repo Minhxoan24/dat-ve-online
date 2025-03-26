@@ -62,7 +62,7 @@ const MyTicketsScreen = ({ navigation }) => {
                 <View onPress={() => navigation.goBack()}>
                     <Icon name="chevron-left" size={20} color="green" />
                 </View>
-                <Text style={styles.headerTitle}>MY TICKET</Text>
+                <Text style={styles.headerTitle}>Vé Đã Mua</Text>
 
             </TouchableOpacity>
 
@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-
         padding: 15,
         backgroundColor: 'white',
         elevation: 2,
@@ -138,24 +137,21 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 20,
         fontSize: 18,
-
+        fontFamily: "Roboto", // Added font family
     },
     tabContainer: {
         flexDirection: "row",
         justifyContent: "center",
         backgroundColor: "#fff",
         alignItems: "center",
-
-
     },
     tab: {
-
         width: "50%",
         borderBottomWidth: 2,
         borderBottomColor: "transparent",
         paddingVertical: 20,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     activeTab: {
         borderBottomColor: "#28a745",
@@ -163,14 +159,15 @@ const styles = StyleSheet.create({
     tabText: {
         fontSize: 16,
         color: "#888",
+        fontFamily: "Roboto", // Added font family
     },
     activeTabText: {
         color: "#28a745",
         fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
     ticketCard: {
         backgroundColor: "#fff",
-
         marginHorizontal: 10,
         marginVertical: 20,
         borderRadius: 10,
@@ -180,62 +177,58 @@ const styles = StyleSheet.create({
         elevation: 3,
         flexDirection: "row",
         justifyContent: "space-between",
-
-
     },
     ticketLeft: {
         marginHorizontal: 30,
         marginVertical: 20,
-        flexShrink: 1, // ✅ Ngăn chữ tràn ra ngoài
-        maxWidth: "60%", // ✅ Giới hạn chiều rộng (có thể điều chỉnh)
-
+        flexShrink: 1, // Prevent text overflow
+        maxWidth: "60%", // Limit width
     },
     ticketRight: {
         marginHorizontal: 30,
-
         borderLeftWidth: 2,
         borderColor: "#D9D9D9",
         justifyContent: "center",
         alignItems: "center",
-        paddingLeft: 20
-
+        paddingLeft: 20,
     },
-
     title: {
         width: "100%",
         fontSize: 20,
         fontWeight: "bold",
         marginVertical: 20,
-
+        fontFamily: "Roboto", // Added font family
     },
     details: {
         fontSize: 14,
         color: "#666",
+        fontFamily: "Roboto", // Added font family
     },
     price: {
         fontSize: 20,
         fontWeight: "bold",
         color: "#28a745",
         marginVertical: 20,
-
+        fontFamily: "Roboto", // Added font family
     },
     points: {
         fontSize: 14,
         color: "#ff9900",
         marginVertical: 10,
-
+        fontFamily: "Roboto", // Added font family
     },
     expire: {
         fontSize: 12,
         color: "red",
         paddingLeft: 10,
-
+        fontFamily: "Roboto", // Added font family
     },
     emptyText: {
         textAlign: "center",
         fontSize: 16,
         color: "#888",
         marginTop: 20,
+        fontFamily: "Roboto", // Added font family
     },
 });
 

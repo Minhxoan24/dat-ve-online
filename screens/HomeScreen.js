@@ -76,7 +76,7 @@ const HomeScreen = ({ navigation }) => {
     return (
         <TouchableWithoutFeedback onPress={closeMenuIfNeeded}>
             <View style={styles.container}>
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+                <StatusBar translucent backgroundColor="white" barStyle="dark-content" />
                 <View style={styles.navicon}>
                     <TouchableOpacity onPress={handleUserPress} style={styles.userContainer}>
                         {user ? (
@@ -98,11 +98,27 @@ const HomeScreen = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.navBar}>
-                    <TouchableOpacity onPress={() => setSelectedTab("Sắp Chiếu")}>
+                    {/* <TouchableOpacity onPress={() => setSelectedTab("Sắp Chiếu")} style={[selectedTab === "Sắp Chiếu" && styles.activeTab]}>
                         <Text style={[styles.navItem, selectedTab === "Sắp Chiếu" && styles.active]}>SẮP CHIẾU</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setSelectedTab("Đang Chiếu")}>
                         <Text style={[styles.navItem, selectedTab === "Đang Chiếu" && styles.active]}>ĐANG CHIẾU</Text>
+                    </TouchableOpacity> */}
+                    <TouchableOpacity
+                        style={[styles.tab, selectedTab === "Sắp Chiếu" && styles.activeTab]}
+                        onPress={() => setSelectedTab("Sắp Chiếu")}
+                    >
+                        <Text style={[styles.navItem, selectedTab === "Sắp Chiếu" && styles.active]}>
+                            Phim sắp xem
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.tab, selectedTab === "Đang Chiếu" && styles.activeTab]}
+                        onPress={() => setSelectedTab("Đang Chiếu")}
+                    >
+                        <Text style={[styles.navItem, selectedTab === "Đang Chiếu" && styles.active]}>
+                            Phim đã xem
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 <TextInput style={styles.searchBar} placeholder="Tìm tên phim" placeholderTextColor="rgba(0, 0, 0, 0.5)" />
@@ -168,18 +184,40 @@ const styles = StyleSheet.create({
     header: {
         width: "100%",
         fontSize: 20, fontWeight: 'bold',
+        fontFamily: "Roboto",
     },
     navBar: {
         flexDirection: 'row', justifyContent: 'space-around',
         backgroundColor: "#FFFFFF",
-        width: "100%"
+        width: "100%",
+        fontFamily: "Roboto",
     },
     navItem: {
         fontSize: 16, color: '#888',
         padding: 10,
         paddingVertical: 20,
+        fontFamily: "Roboto",
     },
-    active: { color: 'green', fontWeight: 'bold' },
+    active: {
+        color: 'green', fontWeight: 'bold',
+        fontFamily: "Roboto",
+
+
+
+    },
+    tab: {
+
+        width: "50%",
+        borderBottomWidth: 2,
+        borderBottomColor: "transparent",
+
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    activeTab: {
+        borderBottomColor: "#28a745",
+
+    },
     searchBar: {
         backgroundColor: '#FFFFFF', padding: 10, borderRadius: 20,
         width: "90%",
@@ -196,8 +234,11 @@ const styles = StyleSheet.create({
         flex: 1, alignItems: 'center', margin: 5,
     },
     movieImage: { width: 100, height: 150, borderRadius: 8, resizeMode: 'cover' },
-    movieTitle: { fontSize: 14, fontWeight: 'bold', textAlign: 'center' },
-    movieDuration: { fontSize: 12, color: '#666' },
+    movieTitle: {
+        fontSize: 14, fontWeight: 'bold', textAlign: 'center',
+        fontFamily: "Roboto",
+    },
+    movieDuration: { fontSize: 12, color: '#666', fontFamily: "Roboto", },
     navicon: {
         backgroundColor: "#FFFFFF",
         flexDirection: "row",
@@ -216,7 +257,8 @@ const styles = StyleSheet.create({
     },
     username: {
         color: "green",
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: "Roboto",
     },
     icon: {
         width: 30,
@@ -246,6 +288,7 @@ const styles = StyleSheet.create({
         color: "gray",
         fontSize: 18,
         marginLeft: 15,
+        fontFamily: "Roboto",
     },
     closeMenu: {
 

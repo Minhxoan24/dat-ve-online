@@ -16,7 +16,7 @@ const AccountScreen = ({ route, navigation }) => {
             {/* Header */}
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.header}>
                 <Icon name="chevron-left" size={20} color="green" />
-                <Text style={styles.headerTitle}>ACCOUNT INFORMATION</Text>
+                <Text style={styles.headerTitle}>Thông Tin Tài Khoản</Text>
             </TouchableOpacity>
 
             <ScrollView>
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 20,
         fontSize: 18,
+        fontFamily: "Roboto",
     },
     avatarContainer: {
         alignItems: 'center',
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     username: {
         marginTop: 10,
         fontSize: 16,
+        fontFamily: "Roboto",
     },
     listItem: {
         flexDirection: 'row',
@@ -132,12 +134,14 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         marginLeft: 15,
+        fontFamily: "Roboto",
     },
     logoutText: {
         flex: 1,
         fontSize: 16,
         marginLeft: 15,
-        color: "red"
+        color: "red",
+        fontFamily: "Roboto",
     },
     separator: {
         height: 40,

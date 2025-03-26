@@ -38,7 +38,7 @@ const AccountInfoScreen = ({ navigation }) => {
                 `https://your-api.com/users/${user.id}`,
                 updatedUser
             );
-            
+
             const userNew = response.data;
             setUser(userNew);
             await AsyncStorage.setItem("user", JSON.stringify(userNew));
@@ -52,9 +52,9 @@ const AccountInfoScreen = ({ navigation }) => {
         <View style={styles.container}>
             <TouchableOpacity style={styles.header} onPress={() => navigation.goBack()}>
                 <Icon name="chevron-left" size={20} color="green" />
-                <Text style={styles.headerTitle}>ACCOUNT INFORMATION</Text>
+                <Text style={styles.headerTitle}>Chi Tiết Tài Khoản</Text>
             </TouchableOpacity>
-            
+
             <Text style={styles.sectionTitle}>Tài khoản của bạn là</Text>
             <TextInput style={styles.input} editable={false} value={user.email} />
 
@@ -104,15 +104,18 @@ const AccountInfoScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#D9D9D9', marginTop: 30 },
-    header: { flexDirection: 'row', padding: 15, backgroundColor: 'white', elevation: 2 },
-    headerTitle: { flex: 1, paddingLeft: 20, fontSize: 18 },
-    sectionTitle: { fontSize: 14, color: 'gray', padding: 20, paddingBottom: 10 },
+    header: {
+        flexDirection: 'row', padding: 15, backgroundColor: 'white', elevation: 2,
+        fontFamily: "Roboto",
+    },
+    headerTitle: { flex: 1, paddingLeft: 20, fontSize: 18, fontFamily: "Roboto" },
+    sectionTitle: { fontSize: 14, color: 'gray', padding: 20, paddingBottom: 10, fontFamily: "Roboto" },
     input: { backgroundColor: '#FFFFFF', padding: 20, borderBottomWidth: 1, borderColor: "#D9D9D9", marginTop: 5 },
     row: { flexDirection: 'row', justifyContent: 'space-between', padding: 20, backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#D9D9D9', alignItems: "center" },
-    label: { fontSize: 16, color: "#D9D9D9" },
-    value: { fontSize: 16, fontWeight: 'bold', textAlign: 'right' },
+    label: { fontSize: 16, color: "#D9D9D9", fontFamily: "Roboto" },
+    value: { fontSize: 16, fontWeight: 'bold', textAlign: 'right', fontFamily: "Roboto", flex: 1 },
     updateButton: { width: "80%", backgroundColor: '#4CDE4C', padding: 10, borderRadius: 20, alignItems: 'center', marginTop: 20, alignSelf: "center" },
-    buttonText: { color: 'white', fontSize: 16 }
+    buttonText: { color: 'white', fontSize: 16, fontFamily: "Roboto" },
 });
 
 export default AccountInfoScreen;

@@ -98,7 +98,7 @@ const MovieDetail = ({ route, navigation }) => {
                 <View >
                     <Icon name="chevron-left" size={20} color="green" />
                 </View>
-                <Text style={styles.headerTitle}>ACCOUNT GIFT</Text>
+                <Text style={styles.headerTitle}>Chi Tiết Phim</Text>
 
             </TouchableOpacity>
 
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 20,
         fontSize: 18,
-
+        fontFamily: "Roboto",
     },
     backButton: {
         padding: 15,
@@ -200,6 +200,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'green',
         fontWeight: 'bold',
+        fontFamily: "Roboto",
+
     },
     movieImage: {
         width: '100%',
@@ -209,13 +211,18 @@ const styles = StyleSheet.create({
     infoContainer: {
         padding: 20,
     },
+    head: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center", // Ensure vertical alignment
+    },
     title: {
         fontSize: 24,
         marginBottom: 5,
-    },
-    head: {
-        flexDirection: "row",
-        justifyContent: "space-between"
+        fontFamily: "Roboto",
+        flex: 1, // Allow the title to take up remaining space
+        flexWrap: "wrap", // Enable wrapping for long text
+        marginRight: 10, // Add spacing between title and confirm button
     },
     confirm: {
         backgroundColor: "#98FB98",
@@ -227,17 +234,22 @@ const styles = StyleSheet.create({
     },
     confirmText: {
         fontWeight: 'bold',
+        fontFamily: "Roboto",
+
     },
     sectionTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginTop: 15,
         marginBottom: 10,
+        fontFamily: "Roboto",
+
     },
     description: {
         fontSize: 16,
         lineHeight: 24,
         color: '#333',
+        fontFamily: "Roboto",
     },
     modalContainer: {
         flex: 1,
@@ -256,6 +268,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
         textAlign: 'center',
+        fontFamily: "Roboto",
+
     },
     daysContainer: {
         flexDirection: 'row',
@@ -276,19 +290,27 @@ const styles = StyleSheet.create({
     },
     dayText: {
         fontSize: 12,
+        fontFamily: "Roboto",
+
     },
     dateText: {
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily: "Roboto",
+
     },
     activeDateText: {
         color: 'white',
+        fontFamily: "Roboto",
+
 
     },
     dateTimeText: {
         textAlign: 'center',
         marginBottom: 10,
         fontWeight: 'bold',
+        fontFamily: "Roboto",
+
     },
     timesContainer: {
         flexDirection: 'row',
@@ -307,6 +329,8 @@ const styles = StyleSheet.create({
     },
     timeText: {
         fontSize: 14,
+        fontFamily: "Roboto",
+
     },
     closeButton: {
         backgroundColor: '#f0f0f0',
@@ -321,6 +345,8 @@ const styles = StyleSheet.create({
     },
     closeButtonText: {
         fontWeight: 'bold',
+        fontFamily: "Roboto",
+
     },
     dot: {
         width: 6,

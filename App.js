@@ -17,10 +17,20 @@ import AccountMemberScreen from './screens/Account/AccountMemberScreen';
 import AccountPointScreen from './screens/Account/AccountPointScreen';
 import AccountGiftScreen from './screens/Account/AccountGiftScreen';
 import { UserProvider } from './context/UserContext';
+import { useFonts } from 'expo-font';
+import AppLoading from "expo-app-loading";
 
 const Stack = createStackNavigator();
 
 const App = () => {
+  const [fontsLoaded] = useFonts({
+    'Roboto': require('./assets/fonts/Roboto/static/Roboto-Regular.ttf'),
+    'Roboto-Bold': require('./assets/fonts/Roboto/static/Roboto-Bold.ttf'),
+    'Roboto-Italic': require('./assets/fonts/Roboto/static/Roboto-Italic.ttf'),
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
     <UserProvider>
       <NavigationContainer>

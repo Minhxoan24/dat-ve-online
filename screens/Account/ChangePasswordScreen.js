@@ -97,12 +97,12 @@ const ChangePassword = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#D9D9D9', marginTop: 30 },
     header: { flexDirection: 'row', padding: 15, backgroundColor: 'white', elevation: 2 },
-    headerTitle: { flex: 1, paddingLeft: 20, fontSize: 18 },
-    sectionTitle: { fontSize: 14, color: 'gray', padding: 20, paddingBottom: 10 },
-    input: { backgroundColor: '#FFFFFF', flex: 1 },
+    headerTitle: { flex: 1, paddingLeft: 20, fontSize: 18, fontFamily: "Roboto" },
+    sectionTitle: { fontSize: 14, color: 'gray', padding: 20, paddingBottom: 10, fontFamily: "Roboto" },
+    input: { backgroundColor: '#FFFFFF', flex: 1, fontFamily: "Roboto", },
     row: { flexDirection: 'row', padding: 20, paddingVertical: 10, backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#D9D9D9', alignItems: "center" },
     updateButton: { width: "80%", backgroundColor: '#4CDE4C', padding: 10, borderRadius: 20, alignItems: 'center', marginTop: 20, marginHorizontal: "auto" },
-    buttonText: { color: 'white', fontSize: 16 },
+    buttonText: { color: 'white', fontSize: 16, fontFamily: "Roboto" },
 });
 
 export default ChangePassword;

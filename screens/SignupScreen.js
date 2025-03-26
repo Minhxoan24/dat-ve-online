@@ -66,7 +66,7 @@ const SignupScreen = ({ navigation }) => {
                     <TextInput style={styles.input} placeholder="Mật khẩu" secureTextEntry onChangeText={setPassword} />
 
                     {/* Chọn ngày sinh */}
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={styles.dobAndGender}>
                         <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={[styles.input, styles.inputHalf]}>
                             <Text style={styles.dateText}>{dob ? dob.toLocaleDateString() : "Chọn ngày sinh"}</Text>
                         </TouchableOpacity>
@@ -101,23 +101,64 @@ const SignupScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    safeContainer: { flex: 1, backgroundColor: "#fff" },
-    scrollContainer: { alignItems: "center" },
-    container: { width: "85%", alignItems: "center" },
-    imageRegister: { marginBottom: 30 },
+    safeContainer: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    scrollContainer: {
+        alignItems: "center"
+    },
+    container: {
+        width: "85%",
+        alignItems: "center"
+    },
+    imageRegister: {
+        marginBottom: 30
+    },
     input: {
         borderBottomWidth: 1,
         borderColor: "#ccc",
         marginBottom: 15,
         padding: 10,
         width: "100%",
+        fontFamily: "Roboto", // Added font family
     },
-    dobAndGender: { flexDirection: "row", justifyContent: "space-between", width: "100%" },
-    inputHalf: { width: "50%", justifyContent: "center" },
-    dateText: { color: "#000", textAlign: "left" },
-    note: { color: "red", fontStyle: "italic", marginBottom: 10, alignSelf: "flex-start" },
-    button: { backgroundColor: "#4CDE4C", paddingVertical: 12, borderRadius: 30, alignItems: "center", width: "80%", marginTop: 20 },
-    buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+    dobAndGender: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+
+    },
+    inputHalf: {
+        width: "50%",
+        justifyContent: "center"
+    },
+    dateText: {
+        color: "#000",
+        textAlign: "left",
+        fontFamily: "Roboto", // Added font family
+    },
+    note: {
+        color: "red",
+        fontStyle: "italic",
+        marginBottom: 10,
+        alignSelf: "flex-start",
+        fontFamily: "Roboto", // Added font family
+    },
+    button: {
+        backgroundColor: "#4CDE4C",
+        paddingVertical: 12,
+        borderRadius: 30,
+        alignItems: "center",
+        width: "80%",
+        marginTop: 20
+    },
+    buttonText: {
+        color: "#fff",
+        fontSize: 16,
+        fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
+    },
 });
 
 export default SignupScreen;

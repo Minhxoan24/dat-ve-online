@@ -23,14 +23,14 @@ const LoginScreen = ({ navigation }) => {
             Alert.alert("Lỗi", "Vui lòng nhập email và mật khẩu");
             return;
         }
-    
+
         setLoading(true);
         try {
             const response = await axios.post(API_URL, {
                 email: email,
                 mat_khau: password
             });
-    
+
             setLoading(false);
             if (response.data.message === "Đăng nhập thành công!") {
                 await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
@@ -49,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
             console.error(error);
         }
     };
-    
+
 
     return (
         <View style={styles.container}>
@@ -57,7 +57,7 @@ const LoginScreen = ({ navigation }) => {
                 <View >
                     <Icon name="chevron-left" size={20} color="green" />
                 </View>
-                <Text style={styles.headerTitle}>ACCOUNT MEMBER</Text>
+                <Text style={styles.headerTitle}>Đăng Nhập</Text>
             </TouchableOpacity>
             <Image source={require("../assets/img/banner.png")} style={styles.banner} />
 
@@ -113,14 +113,49 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 20,
         fontSize: 18,
+        fontFamily: "Roboto", // Added font family
     },
-    banner: { width: "100%", height: 180, marginBottom: 30 },
-    form: { flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 20 },
-    input: { width: "100%", borderBottomWidth: 1, borderColor: "#ccc", paddingVertical: 10, marginVertical: 10 },
-    loginBtn: { width: "100%", backgroundColor: "#33DD33", padding: 15, alignItems: "center", borderRadius: 20, marginVertical: 10 },
-    loginText: { color: "white", fontWeight: "bold" },
-    forgotPass: { color: "#007bff", marginVertical: 15 },
-    register: { marginTop: 30 },
+    banner: {
+        width: "100%",
+        height: 180,
+        marginBottom: 30
+    },
+    form: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 20
+    },
+    input: {
+        width: "100%",
+        borderBottomWidth: 1,
+        borderColor: "#ccc",
+        paddingVertical: 10,
+        marginVertical: 10,
+        fontFamily: "Roboto", // Added font family
+    },
+    loginBtn: {
+        width: "100%",
+        backgroundColor: "#33DD33",
+        padding: 15,
+        alignItems: "center",
+        borderRadius: 20,
+        marginVertical: 10
+    },
+    loginText: {
+        color: "white",
+        fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
+    },
+    forgotPass: {
+        color: "#007bff",
+        marginVertical: 15,
+        fontFamily: "Roboto", // Added font family
+    },
+    register: {
+        marginTop: 30,
+        fontFamily: "Roboto", // Added font family
+    },
 });
 
 export default LoginScreen;

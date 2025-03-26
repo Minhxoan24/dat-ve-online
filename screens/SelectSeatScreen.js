@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Modal } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated, StatusBar } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import axios from "axios";
 
@@ -12,24 +12,16 @@ const rows = [
     ["F1", "F2", "F3", "F4", "F5", "F6", "F7",],
     ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8"],
     ["H1", "H2", "H3", "H4",],
-
-
-
 ];
-
-
-//  Giả sử đây là ghế đã được đặt từ API
-
-const ticketPrice = 150000; // Giá vé cố định
 
 const SelectSeat = ({ route, navigation }) => {
     const { movie, selectedDay, selectedTime } = route.params;
-    console.log(route.params)
     const [selectedSeats, setSelectedSeats] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [occupiedSeats, setOccupiedSeats] = useState([]); // Lưu danh sách ghế đã đặt từ API
+    const [occupiedSeats, setOccupiedSeats] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const slideAnim = useRef(new Animated.Value(0)).current; // Animation value for sliding
 
-    // Gọi API để lấy danh sách ghế đã đặt
+    // Fetch occupied seats from API
     useEffect(() => {
         const fetchOccupiedSeats = async () => {
             try {
@@ -38,30 +30,47 @@ const SelectSeat = ({ route, navigation }) => {
                     setOccupiedSeats(response.data[0].occupiedSeats || []);
                 }
             } catch (error) {
-                console.error("Lỗi khi lấy danh sách ghế đã đặt:", error);
+                console.error("Error fetching occupied seats:", error);
             }
         };
         fetchOccupiedSeats();
     }, []);
 
     const toggleSeat = (seat) => {
+        if (occupiedSeats.includes(seat)) return;
+
         let updatedSeats;
-        if (occupiedSeats.includes(seat)) return; // Không cho chọn ghế đã đặt
-
         if (selectedSeats.includes(seat)) {
-            updatedSeats = (selectedSeats.filter((s) => s !== seat));
+            updatedSeats = selectedSeats.filter((s) => s !== seat);
         } else {
-
             updatedSeats = [...selectedSeats, seat];
         }
         setSelectedSeats(updatedSeats);
 
-        // Hiện modal nếu có ghế được chọn
-        setModalVisible(updatedSeats.length > 0);
+        // Show modal if there are selected seats
+        if (!isModalVisible) {
+            setIsModalVisible(true);
+            slideInModal();
+        }
     };
 
-    // Hàm tính tổng tiền
-    const totalPrice = selectedSeats.length * ticketPrice;
+    const slideInModal = () => {
+        Animated.timing(slideAnim, {
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const slideOutModal = () => {
+        Animated.timing(slideAnim, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+        }).start(() => setIsModalVisible(false));
+    };
+
+    const totalPrice = selectedSeats.length * 150000;
 
     const renderSeats = () => {
         return rows.map((row, rowIndex) => (
@@ -69,7 +78,7 @@ const SelectSeat = ({ route, navigation }) => {
                 {row.map((seat, index) => {
                     const isSelected = selectedSeats.includes(seat);
                     const isOccupied = occupiedSeats.includes(seat);
-                    const isSweetBox = rowIndex === rows.length - 1; // Sweet Box ở hàng cuối
+                    const isSweetBox = rowIndex === rows.length - 1;
 
                     return (
                         <TouchableOpacity
@@ -81,9 +90,9 @@ const SelectSeat = ({ route, navigation }) => {
                                         isSweetBox ? styles.sweetBoxSeat : null,
                             ]}
                             onPress={() => toggleSeat(seat)}
-                            disabled={isOccupied} // Vô hiệu hóa ghế đã đặt
+                            disabled={isOccupied}
                         >
-                            {isOccupied ? <Icon name="window-close" size={30} color="white" backgroundColor="black" /> : (
+                            {isOccupied ? <Icon name="window-close" size={30} color="white" /> : (
                                 <Text style={styles.seatText}>{seat}</Text>
                             )}
                         </TouchableOpacity>
@@ -95,21 +104,23 @@ const SelectSeat = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
+            <StatusBar translucent backgroundColor="black" barStyle="dark-content" />
+
             {/* Header */}
             <TouchableOpacity style={styles.header} onPress={() => navigation.goBack()}>
                 <Icon name="chevron-left" size={20} color="green" />
                 <Text style={styles.headerTitle}>Đặt vé</Text>
             </TouchableOpacity>
 
-            {/* Màn hình */}
+            {/* Screen */}
             <View style={styles.screen}>
                 <Text style={styles.screenText}>Màn hình</Text>
             </View>
 
-            {/* Ghế ngồi */}
+            {/* Seats */}
             <ScrollView contentContainerStyle={styles.seatContainer}>{renderSeats()}</ScrollView>
 
-            {/* Chú thích */}
+            {/* Legend */}
             <View style={styles.legend}>
                 <View>
                     <View style={styles.legendItem}>
@@ -121,45 +132,44 @@ const SelectSeat = ({ route, navigation }) => {
                         <Text style={styles.legendText}>Ghế đang đặt</Text>
                     </View>
                 </View>
-
                 <View>
                     <View style={styles.legendItem}>
                         <View style={[styles.box, { backgroundColor: "#FF4081" }]} />
                         <Text style={styles.legendText}>Sweet Box</Text>
                     </View>
                     <View style={styles.legendItem}>
-                        <View style={[styles.box,]}>
+                        <View style={[styles.box]}>
                             <Icon name="window-close" size={60} color="white" />
                         </View>
                         <Text style={styles.legendText}>Ghế đã đặt</Text>
                     </View>
                 </View>
-
-
             </View>
 
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <TouchableOpacity style={{ height: 500, }} onPress={() => setModalVisible(false)} >
-
-                </TouchableOpacity>
-                <View style={styles.modalContainer} pointerEvents="box-none">
-
+            {/* Animated Modal */}
+            {isModalVisible && (
+                <Animated.View
+                    style={[
+                        styles.animatedModal,
+                        {
+                            transform: [
+                                {
+                                    translateY: slideAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [300, 0], // Slide from bottom to top
+                                    }),
+                                },
+                            ],
+                        },
+                    ]}
+                >
                     <View style={styles.modalContent}>
                         <View style={styles.modalText}>
                             <View style={styles.modalTitle}>
                                 <View style={styles.modalMovie}>
-                                    {/* Tên phim */}
                                     <Text style={styles.movieTitle}>{movie.title}</Text>
                                     <Text style={styles.movieSubtitle}>{selectedDay} {selectedTime}</Text>
                                 </View>
-
-
-                                {/* Vị trí ghế */}
                                 <View style={styles.selectedSeatsContainer}>
                                     {selectedSeats.map((seat, index) => (
                                         <View key={index} style={styles.seatTag}>
@@ -167,40 +177,32 @@ const SelectSeat = ({ route, navigation }) => {
                                         </View>
                                     ))}
                                 </View>
-
                             </View>
-
-
-                            {/* Giá vé */}
                             <Text style={styles.price}>{totalPrice.toLocaleString()} đ</Text>
                             <Text style={styles.ticketCount}>{selectedSeats.length} ghế</Text>
                         </View>
-
-
-                        {/* Nút đặt vé */}
-
-
-                        {/* Nút đóng modal */}
-                        <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+                        <TouchableOpacity style={styles.closeButton} onPress={slideOutModal}>
                             <Icon name="times" size={20} color="black" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.bookButton} onPress={() => {
-                            setModalVisible(false);
-                            navigation.navigate("Checkout", {
-                                movie: movie,
-                                selectedDay: selectedDay,
-                                selectedTime: selectedTime,
-                                selectedSeats: selectedSeats,
-                                price: totalPrice
-                            });
-                        }
-                        }>
+                        <TouchableOpacity
+                            style={styles.bookButton}
+                            onPress={() => {
+                                slideOutModal();
+                                navigation.navigate("Checkout", {
+                                    movie: movie,
+                                    selectedDay: selectedDay,
+                                    selectedTime: selectedTime,
+                                    selectedSeats: selectedSeats,
+                                    price: totalPrice,
+                                });
+                            }}
+                        >
                             <Text style={styles.bookButtonText}>Đặt vé</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
-            </Modal >
-        </View >
+                </Animated.View>
+            )}
+        </View>
     );
 };
 
@@ -211,22 +213,18 @@ const styles = StyleSheet.create({
         padding: 20,
         marginTop: 30,
         justifyContent: "center",
-
     },
-
     header: {
         flexDirection: "row",
         alignItems: "center",
-
-        marginBottom: 20
+        marginBottom: 20,
     },
-
     headerTitle: {
         fontSize: 18,
         color: "white",
-        paddingLeft: 10
+        paddingLeft: 10,
+        fontFamily: "Roboto", // Added font family
     },
-
     screen: {
         height: 30,
         backgroundColor: "gray",
@@ -236,24 +234,20 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 30,  // Bo góc trái trên
         borderTopRightRadius: 30,  // Bo góc phải trên
     },
-
     screenText: {
         color: "white",
-        fontSize: 14
+        fontSize: 14,
+        fontFamily: "Roboto", // Added font family
     },
-
     seatContainer: {
         alignItems: "center",
         zIndex: 6,
-
     },
-
     row: {
         flexDirection: "row",
         justifyContent: "center",
-        marginBottom: 5
+        marginBottom: 5,
     },
-
     seat: {
         width: 30,
         height: 30,
@@ -263,60 +257,48 @@ const styles = StyleSheet.create({
         margin: 3,
         borderRadius: 5,
     },
-
     selectedSeat: {
-        backgroundColor: "#4CDE4C"
+        backgroundColor: "#4CDE4C",
     },
-
     sweetBoxSeat: {
         backgroundColor: "#FF4081",
-
     },
     occupiedSeat: {
-        backgroundColor: "black"
+        backgroundColor: "black",
     },
-
     seatText: {
         fontSize: 12,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: "Roboto", // Added font family
     },
-
     legend: {
         flexDirection: "row",
         justifyContent: "center",
-
         flexWrap: "wrap",
-
         marginBottom: 100,
     },
-
     legendItem: {
         flexDirection: "row",
         alignItems: "center",
         margin: 10,
-
     },
-
     box: {
         width: 60,
         height: 60,
         marginRight: 5,
-        borderRadius: 3
+        borderRadius: 3,
     },
-
     legendText: {
         color: "white",
-        fontSize: 12
+        fontSize: 12,
+        fontFamily: "Roboto", // Added font family
     },
     modalContainer: {
         flex: 1,
         zIndex: 5,
         justifyContent: "flex-end",
         pointerEvents: "box-none", // Cho phép bấm vào nút chọn ghế
-
-
     },
-
     modalContent: {
         backgroundColor: "white",
         borderTopLeftRadius: 20,
@@ -324,58 +306,56 @@ const styles = StyleSheet.create({
         padding: 20,
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
-
-
+        alignItems: "center",
+        paddingHorizontal: 5
     },
     modalTitle: {
         flexDirection: "row",
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
+        flex: 1,
     },
-
     movieTitle: {
         fontSize: 18,
         fontWeight: "bold",
+        flexWrap: "wrap",
+        fontFamily: "Roboto", // Added font family
     },
-
     movieSubtitle: {
         fontSize: 14,
         color: "gray",
         marginBottom: 10,
+        fontFamily: "Roboto", // Added font family
     },
-
     selectedSeatsContainer: {
         flexDirection: "row",
-        flexWrap: "wrap",
+        flexWrap: "wrap", // Allow wrapping to the next line
         justifyContent: "center",
         alignItems: "center",
-    },
 
+    },
     seatTag: {
         backgroundColor: "#D1FFD1",
         borderRadius: 5,
         padding: 5,
         margin: 2,
-
     },
-
     seatTagText: {
         fontSize: 12,
         fontWeight: "bold",
         color: "black",
+        fontFamily: "Roboto", // Added font family
     },
-
     price: {
         fontSize: 18,
         fontWeight: "bold",
         marginTop: 10,
+        fontFamily: "Roboto", // Added font family
     },
-
     ticketCount: {
         fontSize: 14,
         color: "gray",
+        fontFamily: "Roboto", // Added font family
     },
-
     bookButton: {
         backgroundColor: "#4CDE4C",
         justifyContent: "center",
@@ -385,25 +365,31 @@ const styles = StyleSheet.create({
         marginRight: 20,
         position: "absolute",
         right: 10,
-
     },
-
     bookButtonText: {
         color: "white",
         fontSize: 16,
         fontWeight: "bold",
         paddingHorizontal: 30,
-
-
-
+        fontFamily: "Roboto", // Added font family
     },
-
     closeButton: {
         position: "absolute",
-        top: 10,
+        top: -5,
         right: 10,
+        padding: 0,
+    },
+    animatedModal: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "white",
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        padding: 20,
+        elevation: 5,
     },
 });
-
 
 export default SelectSeat;
