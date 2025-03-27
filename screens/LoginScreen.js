@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
                 email: email,
                 mat_khau: password
             });
-
+console.log(response.data);
             setLoading(false);
             if (response.data.message === "Đăng nhập thành công!") {
                 await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
